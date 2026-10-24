@@ -382,7 +382,7 @@ async function run(fresh){
     setStatus('지문을 읽고 설계 의도를 쓰는 중… (5~20초)');
     const r = await fetch('/api/generate', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ prompt: buildPrompt(), fresh: !!fresh }), signal: ctl.signal });
     const data = await r.json().catch(() => null);
-    if (!r.ok) throw { code: (data && data.code) || 'upstream_error' };
+    if (!r.ok) throw { code: (data && data.code) || 'upstream_error', detail: (data && data.detail) || ('HTTP ' + r.status) };
     if (!data || !Array.isArray(data.candidates) || !data.candidates.length) throw { code: 'invalid_json' };
     render(data); setStatus('완료! 마음에 드는 문장을 복사해 사례집에 붙여 넣으세요.', 'good');
     $('moreRow').hidden = false;
@@ -392,7 +392,9 @@ async function run(fresh){
     if (code === 'AbortError') setStatus('');
     else if (code === 'rate_limited') setStatus('요청이 몰렸어요. 1분쯤 뒤 다시 눌러 주세요.', 'err');
     else if (code === 'too_large') setStatus('지문이 너무 길어요. 활동에 쓴 지문만 남기고 앞뒤의 다른 내용은 지워 주세요.', 'err');
-    else openFallback('결과를 받지 못했어요. 한 번 더 누르거나, 아래에서 프롬프트를 복사해 다른 AI에 붙여 넣으세요.');
+    else if (code === 'no_key') openFallback('Vercel에 GEMINI_API_KEY가 없어요. Settings → Environment Variables에 넣고 Redeploy 해 주세요.');
+    else if (code === 'bad_key') openFallback('API 키가 맞지 않아요. 키를 다시 복사해 넣고 Redeploy 해 주세요. (' + (e.detail || '') + ')');
+    else openFallback('결과를 받지 못했어요. [' + (code || '알 수 없음') + '] ' + (e && e.detail ? e.detail : '') );
   } finally { busy = false; $('go').disabled = false; $('again').disabled = false; $('progress').hidden = true; }
 }
 
