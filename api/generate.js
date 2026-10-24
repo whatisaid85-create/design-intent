@@ -19,6 +19,14 @@ module.exports = async (req, res) => {
   if (!prompt) return res.status(400).json({ code: 'empty' });
   if (prompt.length > 60000) return res.status(413).json({ code: 'too_large' });
 
+  // 캡처 이미지(최대 8장): 순서대로 넣고 마지막에 요청문
+  const images = (Array.isArray(body.images) ? body.images : []).slice(0, 8)
+    .filter(i => i && typeof i.data === 'string' && /^image\//.test(i.mime || ''));
+  const parts = [
+    ...images.map((i, n) => [{ text: `[캡처 ${n + 1}]` }, { inline_data: { mime_type: i.mime, data: i.data } }]).flat(),
+    { text: prompt }
+  ];
+
   const errors = [];
   for (const model of modelList()) {
     try {
@@ -26,7 +34,7 @@ module.exports = async (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
         body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          contents: [{ role: 'user', parts }],
           generationConfig: { responseMimeType: 'application/json', temperature: body.fresh ? 1.0 : 0.6 }
         })
       });

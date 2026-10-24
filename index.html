@@ -8,151 +8,166 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
 <style>
-/* Layout: 한밤 남보라 무대. 흰 로고 알약 → 오로라 히어로 → 데스크톱 2단(왼쪽 입력 01·02 / 오른쪽 고정 '생성 무대': 연구회 로고 버튼 + 메모 결과), 폰에선 한 줄로 쌓임.
-   이 디자인은 CLASS UP 팔레트 화면처럼 어두운 한 가지 룩으로 고정한다. */
+/* Layout: 밝은 작업대. 위쪽 네이비→바이올렛 띠 위에 로고·제목, 흰 카드가 띠에 겹쳐 올라옴.
+   데스크톱 2단(왼쪽 01 문항 구성 → 02 지문 / 오른쪽 고정: 로고 버튼 + 결과), 폰에선 한 줄. 한 가지 밝은 룩으로 고정. */
 :root{
   --navy:#003390; --sky:#009FE7;
   --yellow:#FFDE59; --orange:#FF914D; --violet:#8D54FE; --peri:#7A89F6; --cyan:#60D5E9;
-  --night:#0d0830; --night-2:#150e45; --glass:rgba(255,255,255,.055); --glass-2:rgba(255,255,255,.09);
-  --edge:rgba(255,255,255,.12); --edge-hi:rgba(255,255,255,.22);
-  --ink:#f1edff; --muted:#b1aadb; --dim:#857fb5;
-  --memo:#fff3b8; --memo-ink:#2a2000; --err:#ff9478; --ok:#7ef0bd;
+  --bg:#f3f2fb; --paper:#ffffff; --ink:#17143a; --muted:#5d5a80; --dim:#8b88aa;
+  --line:#e6e3f5; --field:#f8f7fd; --violet-ink:#6a2fe0; --navy-ink:#0b2f86;
+  --memo:#fff6c9; --memo-ink:#2a2000; --err:#d2452a; --ok:#0f7a52;
+  --shadow:0 1px 2px rgba(23,20,58,.05),0 16px 40px -22px rgba(40,20,120,.35);
   --display:"Do Hyeon","Noto Sans KR",system-ui,sans-serif;
   --body:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  color-scheme:dark;
+  color-scheme:light;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{background:var(--night)}
-body{margin:0;min-height:100%;background:var(--night);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;line-break:strict;overflow-x:hidden}
-.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.65;word-break:keep-all;overflow-wrap:break-word;line-break:strict;overflow-x:hidden}
+.wrap{max-width:1140px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 
-/* 배경 오로라 */
-.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.sky::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 80%)}
-.aur{position:absolute;border-radius:50%;filter:blur(70px)}
-.a1{width:520px;height:520px;background:#5b2fd6;opacity:.45;top:-220px;left:-140px}
-.a2{width:420px;height:420px;background:#0a52c9;opacity:.4;top:-120px;right:-120px}
-.a3{width:300px;height:300px;background:var(--orange);opacity:.16;top:380px;right:10%}
-.a4{width:360px;height:360px;background:var(--cyan);opacity:.12;bottom:-120px;left:20%}
+/* 위쪽 띠 */
+.sky{position:absolute;left:0;right:0;top:0;height:430px;z-index:0;pointer-events:none;overflow:hidden;
+  background:linear-gradient(120deg,#002a7a 0%,#1d3fb0 38%,#5a33d6 72%,#8D54FE 100%);border-radius:0 0 40px 40px}
+.sky::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.16) 1px,transparent 1.3px);background-size:20px 20px;mask-image:linear-gradient(180deg,#000,transparent 85%)}
+.aur{position:absolute;border-radius:50%;filter:blur(60px)}
+.a1{width:340px;height:340px;background:var(--cyan);opacity:.35;top:-160px;left:8%}
+.a2{width:300px;height:300px;background:var(--yellow);opacity:.28;top:-120px;right:6%}
+.a3{width:260px;height:260px;background:var(--orange);opacity:.25;bottom:-140px;right:28%}
+.a4{display:none}
 .page{position:relative;z-index:1}
 
-/* 로고 알약 */
 .logos{display:flex;justify-content:center;padding-top:18px}
-.pill{display:flex;align-items:center;gap:18px;background:#fff;border-radius:999px;padding:8px 22px;box-shadow:0 10px 30px -12px rgba(0,0,0,.6)}
+.pill{display:flex;align-items:center;gap:16px;background:#fff;border-radius:999px;padding:8px 20px;box-shadow:0 10px 26px -12px rgba(0,0,0,.45)}
 .pill img{display:block;height:auto}
-.pill .gg{width:min(120px,34vw)}
-.pill .cu{width:min(74px,20vw)}
-.pill .sep{width:1px;align-self:stretch;background:#e4e1f3}
+.pill .gg{width:min(118px,34vw)}
+.pill .cu{width:min(72px,20vw)}
+.pill .sep{width:1px;align-self:stretch;background:#e7e4f3}
 
-/* 히어로 */
-.hero{text-align:center;padding-block:36px 26px;display:grid;justify-items:center;gap:14px}
-.eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:12.5px;font-weight:700;letter-spacing:.14em;color:var(--yellow);border:1px solid rgba(255,222,89,.35);background:rgba(255,222,89,.08);border-radius:999px;padding:4px 14px}
-.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--yellow)}
-h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,9vw,76px);line-height:1.04;margin:0;letter-spacing:-.01em;text-wrap:balance}
-h1 .grad{background:linear-gradient(95deg,var(--yellow) 0%,var(--orange) 30%,#ff6fb5 55%,var(--violet) 78%,var(--cyan) 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
-.lede{margin:0;color:var(--muted);font-size:clamp(14.5px,2.2vw,17px);max-width:34em}
-.flow{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px}
-.flow span{display:inline-flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--edge);border-radius:999px;padding:5px 14px 5px 6px;font-size:13.5px;font-weight:500}
-.flow b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;font-size:12px;color:#14103a;background:var(--yellow)}
-.flow span:nth-child(2) b{background:var(--peri)}
-.flow span:nth-child(3) b{background:var(--cyan)}
-
-.notice{display:flex;gap:10px;align-items:center;justify-content:center;margin:0 auto 22px;max-width:640px;background:rgba(0,159,231,.1);border:1px solid rgba(0,159,231,.35);border-radius:14px;padding:10px 16px;font-size:13.5px;color:#cfeeff}
-.notice svg{flex:none;color:#7fd0ff}
-.notice p{margin:0}
+.hero{text-align:center;padding-block:26px 30px;display:grid;justify-items:center;gap:12px;color:#fff}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:700;letter-spacing:.14em;color:#2a1d00;background:var(--yellow);border-radius:999px;padding:3px 13px}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--orange)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(38px,7vw,62px);line-height:1.06;margin:0;text-wrap:balance}
+h1 .grad{color:var(--yellow)}
+.lede{margin:0;color:rgba(255,255,255,.88);font-size:clamp(14.5px,2vw,16.5px);max-width:34em}
+.flow{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:2px}
+.flow span{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px 14px 4px 5px;font-size:13.5px;font-weight:500;color:#fff}
+.flow b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;font-size:12px;color:#17143a;background:var(--yellow)}
+.flow span:nth-child(2) b{background:var(--cyan)}
+.flow span:nth-child(3) b{background:#fff}
 
 /* 2단 */
-.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:22px;align-items:start;padding-bottom:30px}
-@media (max-width:880px){.grid{grid-template-columns:minmax(0,1fr)}}
-.col{display:grid;gap:18px;min-width:0}
+.grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:22px;align-items:start;padding-bottom:30px}
+@media (max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
+.col{display:grid;gap:20px;min-width:0}
 .stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px)}
-@media (max-width:880px){.stage{position:static}}
+@media (max-width:900px){.stage{position:static}}
 
-.card{position:relative;background:linear-gradient(180deg,var(--glass-2),var(--glass));border:1px solid var(--edge);border-radius:22px;padding:22px;display:grid;gap:12px;min-width:0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .25s,box-shadow .25s}
-.card:focus-within{border-color:rgba(122,137,246,.7);box-shadow:0 0 0 4px rgba(122,137,246,.18),0 20px 50px -24px rgba(141,84,254,.6)}
+.card{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:24px;display:grid;gap:14px;min-width:0;box-shadow:var(--shadow);transition:border-color .25s,box-shadow .25s}
+.card:focus-within{border-color:var(--peri);box-shadow:0 0 0 4px rgba(122,137,246,.18),var(--shadow)}
 .step{display:flex;align-items:center;gap:14px}
-.big-num{font-family:var(--display);font-size:46px;line-height:.9;background:linear-gradient(180deg,var(--yellow),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
-#c2 .big-num{background:linear-gradient(180deg,var(--cyan),var(--peri));-webkit-background-clip:text;background-clip:text}
+.big-num{display:grid;place-items:center;flex:none;width:52px;height:52px;border-radius:16px;font-family:var(--display);font-size:26px;color:#fff;background:linear-gradient(140deg,var(--violet),var(--peri))}
+.card.second .big-num{background:linear-gradient(140deg,var(--sky),var(--cyan))}
 .step-t{display:grid;gap:0}
 .step-t small{font-size:11.5px;font-weight:700;letter-spacing:.16em;color:var(--dim)}
-.step h2{font-family:var(--display);font-weight:400;font-size:24px;margin:0;line-height:1.2}
-.done{margin-left:auto;display:inline-flex;gap:5px;align-items:center;font-size:12.5px;font-weight:700;color:#0b2a24;background:var(--ok);border-radius:999px;padding:3px 11px;transform:scale(0);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.step h2{font-family:var(--display);font-weight:400;font-size:25px;margin:0;line-height:1.2}
+.done{margin-left:auto;display:inline-flex;gap:5px;align-items:center;font-size:12.5px;font-weight:700;color:var(--ok);background:#e2f7ec;border-radius:999px;padding:3px 11px;transform:scale(0);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
 .card.filled .done{transform:scale(1)}
-.hint{color:var(--muted);font-size:13.5px;margin:0}
+.hint{color:var(--muted);font-size:14px;margin:0}
 .hint b{color:var(--ink);font-weight:700}
-textarea{width:100%;font:inherit;font-size:14px;color:var(--ink);background:rgba(8,5,30,.55);border:1.5px solid var(--edge);border-radius:14px;padding:14px;resize:vertical;line-height:1.6;transition:border-color .2s,background .2s}
-textarea:focus{outline:none;border-color:var(--peri);background:rgba(8,5,30,.75)}
+textarea{width:100%;font:inherit;font-size:14.5px;color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:14px;padding:14px 15px;resize:vertical;line-height:1.65;transition:border-color .2s,background .2s}
+textarea:focus{outline:none;border-color:var(--peri);background:#fff}
 textarea::placeholder{color:var(--dim)}
-textarea::-webkit-scrollbar{width:8px}textarea::-webkit-scrollbar-thumb{background:var(--edge-hi);border-radius:8px}
-button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+button:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
 #passage{min-height:260px}
 #items{min-height:150px}
 .count{font-size:12.5px;color:var(--dim);text-align:right;margin-top:-6px;font-variant-numeric:tabular-nums}
 .count.over{color:var(--err);font-weight:700}
 .example{display:grid;gap:8px}
-.tag{font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--peri)}
-.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
-.ex-grid div{border:1px solid var(--edge);background:rgba(122,137,246,.08);border-radius:12px;padding:8px 10px;font-size:12.5px;line-height:1.45;color:var(--muted);font-variant-numeric:tabular-nums}
+.tag{font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--violet-ink)}
+.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.ex-grid div{border:1px solid var(--line);background:#f6f4ff;border-radius:12px;padding:9px 11px;font-size:12.5px;line-height:1.45;color:var(--muted);font-variant-numeric:tabular-nums}
 .ex-grid strong{display:block;font-size:13px;color:var(--ink)}
-.ex-grid .sp{border-color:rgba(255,145,77,.45);background:rgba(255,145,77,.09)}
+.ex-grid .sp{border-color:#ffd1b3;background:#fff4ec}
 .ex-grid small{color:var(--dim)}
 
-/* 생성 무대 */
-.gen{text-align:center;justify-items:center;padding-block:26px 22px;overflow:hidden}
-.gen::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 30%,rgba(141,84,254,.28),transparent 70%);pointer-events:none}
-.logo-btn{position:relative;display:grid;justify-items:center;gap:12px;border:0;background:transparent;padding:6px;border-radius:24px;cursor:pointer;color:inherit}
-.orbit{position:relative;width:min(190px,52vw);aspect-ratio:1;display:grid;place-items:center;max-width:100%}
+/* 탭·캡처 */
+.tabs{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:#efedf9;justify-self:start}
+.tab{border:0;background:transparent;color:var(--muted);padding:8px 18px;font-weight:700;font-size:14px;border-radius:999px}
+.tab small{font-weight:500;font-size:11.5px;opacity:.8}
+.tab.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px -2px rgba(40,20,120,.25)}
+.drop{display:grid;justify-items:center;gap:4px;text-align:center;padding:30px 16px;border:2px dashed #c9c3f3;border-radius:18px;background:#faf9ff;cursor:pointer;transition:border-color .2s,background .2s}
+.drop:hover,.drop.over{border-color:var(--violet);background:#f3efff}
+.drop svg{color:var(--violet)}
+.drop strong{font-family:var(--display);font-weight:400;font-size:21px}
+.drop span{font-size:13px;color:var(--muted)}
+.drop.full{opacity:.5;pointer-events:none}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.thumb{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#fff;aspect-ratio:3/4;box-shadow:0 6px 14px -10px rgba(0,0,0,.4)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb .no{position:absolute;left:6px;top:6px;min-width:22px;height:22px;border-radius:999px;background:var(--violet);color:#fff;font-size:12px;font-weight:900;display:grid;place-items:center;padding:0 6px}
+.thumb .rm{position:absolute;right:5px;top:5px;width:26px;height:26px;padding:0;border-radius:50%;background:rgba(23,20,58,.75);border:0;color:#fff;font-size:13px;line-height:1}
+.thumb .mv{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:4px;background:linear-gradient(transparent,rgba(23,20,58,.6))}
+.thumb .mv button{width:26px;height:24px;padding:0;font-size:12px;border-radius:8px;background:#fff;border:0;color:var(--ink)}
+.thumb.busy{display:grid;place-items:center;color:var(--muted);font-size:12px;background:var(--field)}
+
+/* 생성 카드 */
+.gen{text-align:center;justify-items:center;padding-block:26px 22px;overflow:hidden;background:linear-gradient(180deg,#f4f0ff,#fff 60%)}
+.logo-btn{position:relative;display:grid;justify-items:center;gap:14px;border:0;background:transparent;padding:6px;border-radius:24px;cursor:pointer;color:inherit}
+.orbit{position:relative;width:min(176px,50vw);aspect-ratio:1;display:grid;place-items:center;max-width:100%}
 .ring{position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 0deg,var(--yellow),var(--orange),#ff6fb5,var(--violet),var(--peri),var(--cyan),var(--yellow));-webkit-mask:radial-gradient(closest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));mask:radial-gradient(closest-side,transparent calc(100% - 5px),#000 calc(100% - 4px))}
-.glow{position:absolute;inset:6%;border-radius:50%;background:conic-gradient(from 90deg,var(--yellow),var(--violet),var(--cyan),var(--orange),var(--yellow));filter:blur(26px);opacity:.5}
-.dot{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--yellow);box-shadow:0 0 12px var(--yellow);top:-8px;left:calc(50% - 5px)}
-.orbit img{position:relative;width:86%;height:auto;transition:transform .35s cubic-bezier(.3,1.5,.5,1);filter:drop-shadow(0 10px 18px rgba(0,0,0,.45))}
-.go-label{font-family:var(--display);font-size:22px;color:#14103a;padding:9px 26px;border-radius:999px;background:linear-gradient(95deg,var(--yellow),var(--orange));box-shadow:0 10px 24px -10px var(--orange),inset 0 -2px 0 rgba(0,0,0,.12)}
+.glow{position:absolute;inset:8%;border-radius:50%;background:conic-gradient(from 90deg,var(--yellow),var(--violet),var(--cyan),var(--orange),var(--yellow));filter:blur(24px);opacity:.35}
+.dot{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px var(--orange);top:-8px;left:calc(50% - 5px)}
+.orbit img{position:relative;width:86%;height:auto;transition:transform .35s cubic-bezier(.3,1.5,.5,1);filter:drop-shadow(0 10px 16px rgba(40,20,120,.25))}
+.go-label{font-family:var(--display);font-size:22px;color:#fff;padding:10px 30px;border-radius:999px;background:linear-gradient(95deg,var(--violet),var(--peri) 60%,var(--sky));box-shadow:0 12px 24px -12px var(--violet)}
 .logo-btn:disabled{cursor:progress}
-.logo-btn:disabled .go-label{background:linear-gradient(95deg,var(--peri),var(--violet));color:#fff}
-@media (hover:hover){.logo-btn:not(:disabled):hover img{transform:scale(1.07) rotate(-4deg)}.logo-btn:not(:disabled):hover .go-label{filter:brightness(1.06)}}
+.logo-btn:disabled .go-label{background:linear-gradient(95deg,var(--orange),#ff6fb5)}
+@media (hover:hover){.logo-btn:not(:disabled):hover img{transform:scale(1.07) rotate(-4deg)}.logo-btn:not(:disabled):hover .go-label{filter:brightness(1.07)}}
 .status{position:relative;color:var(--muted);font-size:14px;min-height:1.6em;margin:0}
 .status.err{color:var(--err);font-weight:500}
-.status.good{color:var(--ok);font-weight:500}
-.progress{position:relative;width:100%;height:6px;border-radius:999px;background:var(--glass-2);overflow:hidden}
+.status.good{color:var(--ok);font-weight:700}
+.progress{position:relative;width:100%;height:6px;border-radius:999px;background:#ebe8f7;overflow:hidden}
 .progress span{display:block;height:100%;width:40%;border-radius:999px;background:linear-gradient(90deg,var(--yellow),var(--orange),var(--violet),var(--cyan));background-size:200% 100%}
 
-button{font:inherit;cursor:pointer;border-radius:999px;border:1px solid var(--edge);background:var(--glass);color:var(--ink);padding:7px 16px;font-weight:500;transition:transform .15s,background .2s,border-color .2s}
+button{font:inherit;cursor:pointer;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);padding:7px 16px;font-weight:500;transition:transform .15s,background .2s,border-color .2s}
 button:active{transform:scale(.96)}
 button.small{font-size:13px;padding:5px 14px}
-button.ghost{position:relative;color:var(--muted)}
+button.ghost{color:var(--muted);background:transparent}
 @media (hover:hover){button.ghost:hover,#again:hover{border-color:var(--peri);color:var(--ink)}}
 button:disabled{opacity:.6;cursor:default}
 
 /* 결과 */
 .res-head{display:flex;align-items:center;gap:10px}
-.res-head h2{font-family:var(--display);font-weight:400;font-size:24px;margin:0}
-.res-head .chip{font-size:11.5px;font-weight:700;letter-spacing:.14em;color:#14103a;background:linear-gradient(90deg,var(--orange),#ff6fb5);border-radius:999px;padding:2px 10px}
-.results{display:grid;gap:16px;padding-top:8px}
-.memo{position:relative;background:var(--memo);border-radius:6px 16px 16px 16px;padding:18px 18px 14px;display:grid;gap:8px;color:var(--memo-ink);box-shadow:0 14px 30px -18px rgba(0,0,0,.7)}
-.memo::after{content:"";position:absolute;top:-9px;left:22px;width:64px;height:17px;border-radius:3px;background:rgba(122,137,246,.75);transform:rotate(-4deg)}
-.memo.best{background:linear-gradient(var(--memo),var(--memo)) padding-box,linear-gradient(120deg,var(--orange),#ff6fb5,var(--violet),var(--cyan)) border-box;border:3px solid transparent}
+.res-head h2{font-family:var(--display);font-weight:400;font-size:25px;margin:0}
+.res-head .chip{font-size:11px;font-weight:700;letter-spacing:.14em;color:#fff;background:var(--orange);border-radius:999px;padding:2px 10px}
+.results{display:grid;gap:18px;padding-top:6px}
+.memo{position:relative;background:var(--memo);border:1px solid #f1dc7c;border-radius:6px 18px 18px 18px;padding:20px 20px 14px;display:grid;gap:8px;color:var(--memo-ink);box-shadow:0 12px 26px -18px rgba(120,90,0,.6)}
+.memo::after{content:"";position:absolute;top:-9px;left:22px;width:62px;height:17px;border-radius:3px;background:rgba(122,137,246,.7);transform:rotate(-4deg)}
+.memo.best{border:2px solid var(--orange);box-shadow:0 0 0 5px rgba(255,145,77,.14),0 14px 30px -18px rgba(255,145,77,.8)}
 .memo.best::after{background:rgba(255,145,77,.85)}
 .memo-label{font-family:var(--display);font-size:18px;display:flex;align-items:center;gap:8px}
-.ribbon{font-family:var(--body);font-size:11.5px;font-weight:700;letter-spacing:.06em;color:#fff;background:var(--violet);border-radius:999px;padding:1px 9px}
-.memo p{margin:0;font-size:16px;line-height:1.75}
+.ribbon{font-family:var(--body);font-size:11.5px;font-weight:700;letter-spacing:.06em;color:#fff;background:var(--violet);border-radius:999px;padding:1px 10px}
+.memo p{margin:0;font-size:16.5px;line-height:1.8}
 .memo-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;font-variant-numeric:tabular-nums}
-.len{opacity:.75}
+.len{opacity:.7}
 .len.warn{opacity:1;color:#c0391d;font-weight:700}
-.memo .small{background:#2a2000;border-color:#2a2000;color:var(--memo);font-weight:700}
-.memo .small.copied{background:#0f7a52;border-color:#0f7a52;color:#fff}
-.analysis-wrap{display:grid;gap:6px}
-.sub{font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--cyan);margin:0}
-.analysis{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;margin:0;padding:12px 14px;border-radius:14px;background:rgba(96,213,233,.08);border:1px solid rgba(96,213,233,.3)}
-.analysis dt{font-weight:700;color:var(--cyan);white-space:nowrap}
-.analysis dd{margin:0;min-width:0}
+.memo .small{background:var(--memo-ink);border-color:var(--memo-ink);color:#fff6c9;font-weight:700;padding:6px 16px}
+.memo .small.copied{background:var(--ok);border-color:var(--ok);color:#fff}
+.analysis-wrap{display:grid;gap:8px}
+.sub{font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--sky);margin:0}
+.analysis{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;font-size:14px;margin:0;padding:0}
+.analysis dt{font-size:12px;font-weight:700;color:#fff;background:var(--navy-ink);border-radius:8px;padding:2px 9px;height:max-content;white-space:nowrap}
+.analysis dt:nth-of-type(2){background:var(--sky)}
+.analysis dt:nth-of-type(3){background:var(--orange)}
+.analysis dd{margin:0;min-width:0;color:var(--ink)}
 details summary{cursor:pointer;font-weight:500;color:var(--muted);font-size:13.5px}
 #promptOut{min-height:160px;margin-top:8px;font-size:12.5px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 
-.foot{text-align:center;padding-block:10px 44px}
-.foot strong{font-family:var(--display);font-weight:400;font-size:20px;letter-spacing:.02em}
-.foot em{font-style:normal;background:linear-gradient(90deg,var(--yellow),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.foot{text-align:center;padding-block:10px 44px;color:var(--muted)}
+.foot strong{font-family:var(--display);font-weight:400;font-size:19px;color:var(--ink)}
+.foot em{font-style:normal;color:var(--violet-ink)}
 
 .spark{position:fixed;width:8px;height:8px;border-radius:2px;pointer-events:none;z-index:50}
 
@@ -160,23 +175,22 @@ details summary{cursor:pointer;font-weight:500;color:var(--muted);font-size:13.5
   .a1{animation:drift 14s ease-in-out infinite alternate}
   .a2{animation:drift 17s ease-in-out infinite alternate-reverse}
   .a3{animation:drift 12s ease-in-out infinite alternate}
-  @keyframes drift{to{transform:translate(60px,40px) scale(1.15)}}
-  h1 .grad{animation:sheen 6s linear infinite}
-  @keyframes sheen{to{background-position:200% 0}}
+  @keyframes drift{to{transform:translate(60px,30px) scale(1.12)}}
   .eyebrow i{animation:pulse 2s infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,222,89,.7)}70%{box-shadow:0 0 0 8px rgba(255,222,89,0)}100%{box-shadow:0 0 0 0 rgba(255,222,89,0)}}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,145,77,.7)}70%{box-shadow:0 0 0 7px rgba(255,145,77,0)}100%{box-shadow:0 0 0 0 rgba(255,145,77,0)}}
   .hero > *{animation:rise .7s cubic-bezier(.2,.8,.3,1) both}
   .hero > :nth-child(2){animation-delay:.08s}.hero > :nth-child(3){animation-delay:.16s}.hero > :nth-child(4){animation-delay:.24s}
-  @keyframes rise{from{transform:translateY(14px)}to{transform:none}}
+  @keyframes rise{from{transform:translateY(12px)}to{transform:none}}
   .ring,.dot-track{animation:spin 9s linear infinite}
   .dot-track{position:absolute;inset:-6px}
   @keyframes spin{to{transform:rotate(360deg)}}
   .glow{animation:spin 14s linear infinite reverse}
   .logo-btn:disabled .ring,.logo-btn:disabled .dot-track{animation-duration:1.2s}
-  .logo-btn:disabled .glow{opacity:.8;animation-duration:2s}
+  .logo-btn:disabled .glow{opacity:.6;animation-duration:2s}
   .logo-btn:disabled img{animation:bob .9s ease-in-out infinite}
   @keyframes bob{50%{transform:translateY(-7px) rotate(3deg)}}
   .progress span{animation:slide 1.3s ease-in-out infinite,sheen 2s linear infinite}
+  @keyframes sheen{to{background-position:200% 0}}
   @keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
   .memo.pop{animation:pop .55s cubic-bezier(.25,1.4,.5,1) both}
   @keyframes pop{from{transform:translateY(14px) rotate(-1deg) scale(.96)}to{transform:none}}
@@ -200,21 +214,14 @@ details summary{cursor:pointer;font-weight:500;color:var(--muted);font-size:13.5
   <header class="wrap hero">
     <span class="eyebrow"><i></i>CLASS UP 사례집</span>
     <h1>설계 의도,<br><span class="grad">한 문장으로.</span></h1>
-    <p class="lede">활동에 쓴 지문과 문항 구성만 넣으면, 사례집 ‘설계 의도’ 칸에 들어갈 문장 후보 3개를 만들어 드립니다.</p>
-    <div class="flow"><span><b>1</b>지문 붙여 넣기</span><span><b>2</b>문항 구성 붙여 넣기</span><span><b>3</b>골라서 복사</span></div>
+    <p class="lede">문항 구성과 활동에 쓴 지문만 넣으면, 사례집 ‘설계 의도’ 칸에 들어갈 문장 후보 3개를 만들어 드립니다.</p>
+    <div class="flow"><span><b>1</b>문항 구성 넣기</span><span><b>2</b>지문 넣기 (텍스트·캡처)</span><span><b>3</b>골라서 복사</span></div>
   </header>
 
   <main class="wrap grid">
     <div class="col">
-      <section class="card" id="c1" aria-labelledby="s1">
-        <div class="step"><span class="big-num" aria-hidden="true">01</span><div class="step-t"><small>STEP 1</small><h2 id="s1">활동에 쓴 지문 넣기</h2></div><span class="done">✓ 입력 완료</span></div>
-        <p class="hint">CLASS UP 활동에 쓴 교과서·모의고사 지문을 <b>처음부터 끝까지</b> 붙여 넣으세요. 발문, 어휘 목록, 쪽 번호가 섞여 있어도 괜찮습니다.</p>
-        <textarea id="passage" aria-labelledby="s1" aria-describedby="pCount" maxlength="30000" placeholder="예) Turning Ideas into Reality&#10;&#10;My grandparents sell their delicious organic jam at the local market every weekend. ..."></textarea>
-        <div class="count" id="pCount">0 / 30,000자</div>
-      </section>
-
       <section class="card" id="c2" aria-labelledby="s2">
-        <div class="step"><span class="big-num" aria-hidden="true">02</span><div class="step-t"><small>STEP 2</small><h2 id="s2">문항 구성 넣기</h2></div><span class="done">✓ 입력 완료</span></div>
+        <div class="step"><span class="big-num" aria-hidden="true">1</span><div class="step-t"><small>STEP 1</small><h2 id="s2">문항 구성 넣기</h2></div><span class="done">✓ 입력 완료</span></div>
         <p class="hint">문항마다 <b>번호 → 유형 → (응답 방식) → [성취기준]</b> 순서로 아래 예시처럼 넣으세요. 응답 방식은 5지 선다·말하기·쓰기 중 하나입니다. 읽기 활동이면 맨 끝에 <b>(읽기 활동)</b>이라고 적어 주세요.</p>
         <div class="example">
           <span class="tag">입력 예시</span>
@@ -227,6 +234,30 @@ details summary{cursor:pointer;font-weight:500;color:var(--muted);font-size:13.5
           </div>
         </div>
         <textarea id="items" aria-labelledby="s2" maxlength="3000" placeholder="① 세부 정보 파악&#10;(5지 선다)&#10;[10공영1-01-01]&#10;② ..."></textarea>
+      </section>
+
+      <section class="card second" id="c1" aria-labelledby="s1">
+        <div class="step"><span class="big-num" aria-hidden="true">2</span><div class="step-t"><small>STEP 2</small><h2 id="s1">활동에 쓴 지문 넣기</h2></div><span class="done">✓ 입력 완료</span></div>
+        <div class="tabs" role="tablist" aria-label="지문 넣는 방법">
+          <button class="tab on" id="tabText" type="button" role="tab" aria-selected="true" aria-controls="paneText">텍스트로 넣기</button>
+          <button class="tab" id="tabImg" type="button" role="tab" aria-selected="false" aria-controls="paneImg">캡처로 넣기 <small>최대 8장</small></button>
+        </div>
+        <div id="paneText" role="tabpanel" style="display:grid;gap:12px">
+          <p class="hint">CLASS UP 활동에 쓴 교과서·모의고사 지문을 <b>처음부터 끝까지</b> 붙여 넣으세요. 발문, 어휘 목록, 쪽 번호가 섞여 있어도 괜찮습니다.</p>
+        <textarea id="passage" aria-labelledby="s1" aria-describedby="pCount" maxlength="30000" placeholder="예) Turning Ideas into Reality&#10;&#10;My grandparents sell their delicious organic jam at the local market every weekend. ..."></textarea>
+        <div class="count" id="pCount">0 / 30,000자</div>
+        </div>
+        <div id="paneImg" role="tabpanel" style="display:grid;gap:12px" hidden>
+          <p class="hint">교과서·모의고사 쪽을 <b>한 장에 한 쪽씩, 글자가 또렷하게</b> 캡처해 <b>쪽 순서대로</b> 넣으세요. 여러 장을 이어서 하나의 지문으로 읽습니다. 파일 선택, 끌어다 놓기, Ctrl+V 붙여넣기 모두 됩니다.</p>
+          <label class="drop" id="drop" for="imgInput">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/></svg>
+            <strong>캡처 이미지 선택</strong>
+            <span>여러 장 한꺼번에 골라도 돼요 · 끌어다 놓기 · Ctrl+V</span>
+            <input type="file" id="imgInput" accept="image/*" multiple hidden>
+          </label>
+          <div class="thumbs" id="thumbs"></div>
+          <div class="count" id="iCount">0 / 8장</div>
+        </div>
       </section>
     </div>
 
@@ -310,9 +341,17 @@ const TEXT_TAIL = `
 
 설계 의도 후보 3개를 번호를 붙여 한 줄씩만 써라. 첫 번째가 가장 추천하는 문장이다. 다른 설명은 쓰지 마라.`;
 
-function inputBlock(){
-  return `\n\n[이번 입력]\n문항 구성:\n${$('items').value.trim()}\n\n지문:\n${$('passage').value.trim().slice(0, 30000)}`;
+let mode = 'text';
+const imgs = []; // {mime, data, url}
+const MAX_IMGS = 8;
+function passageText(){
+  if (mode === 'img') return `(지문은 함께 첨부한 캡처 이미지 ${imgs.length}장에 있다. 이미지를 순서대로 이어서 하나의 지문으로 읽는다. 쪽 번호, 단어 목록, 발문, 보조 상자는 규칙 1대로 소재에서 뺀다.)`;
+  return $('passage').value.trim().slice(0, 30000);
 }
+function inputBlock(){
+  return `\n\n[이번 입력]\n문항 구성:\n${$('items').value.trim()}\n\n지문:\n${passageText()}`;
+}
+const hasPassage = () => mode === 'img' ? imgs.length > 0 : !!$('passage').value.trim();
 const buildPrompt = () => RULES + JSON_TAIL + inputBlock();
 const buildTextPrompt = () => RULES + TEXT_TAIL + inputBlock();
 
@@ -373,16 +412,17 @@ function openFallback(msg){ setStatus(msg, 'err'); $('fallback').hidden = false;
 
 async function run(fresh){
   if (busy) return;
-  if (!$('passage').value.trim()) { setStatus('STEP 1에 지문을 넣어 주세요.', 'err'); shake($('c1')); $('passage').focus(); return; }
-  if (!$('items').value.trim()) { setStatus('STEP 2에 문항 구성을 넣어 주세요.', 'err'); shake($('c2')); $('items').focus(); return; }
+  if (!$('items').value.trim()) { setStatus('STEP 1에 문항 구성을 넣어 주세요.', 'err'); shake($('c2')); $('items').focus(); return; }
+  if (!hasPassage()) { setStatus(mode === 'img' ? 'STEP 2에 캡처 이미지를 1장 이상 넣어 주세요.' : 'STEP 2에 지문을 넣어 주세요.', 'err'); shake($('c1')); if (mode === 'text') $('passage').focus(); return; }
+  if (imgs.some(i => i.pending)) { setStatus('캡처를 준비하는 중이에요. 잠시 뒤 다시 눌러 주세요.'); return; }
   busy = true; $('go').disabled = true; $('again').disabled = true;
   try {
     ctl?.abort(); ctl = new AbortController();
     $('progress').hidden = false;
     setStatus('지문을 읽고 설계 의도를 쓰는 중… (5~20초)');
-    const r = await fetch('/api/generate', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ prompt: buildPrompt(), fresh: !!fresh }), signal: ctl.signal });
+    const r = await fetch('/api/generate', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ prompt: buildPrompt(), fresh: !!fresh, images: mode === 'img' ? imgs.map(({mime, data}) => ({mime, data})) : [] }), signal: ctl.signal });
     const data = await r.json().catch(() => null);
-    if (!r.ok) throw { code: (data && data.code) || 'upstream_error', detail: (data && data.detail) || ('HTTP ' + r.status) };
+    if (!r.ok) throw { code: (data && data.code) || (r.status === 413 ? 'too_large' : 'upstream_error'), detail: (data && data.detail) || ('HTTP ' + r.status) };
     if (!data || !Array.isArray(data.candidates) || !data.candidates.length) throw { code: 'invalid_json' };
     render(data); setStatus('완료! 마음에 드는 문장을 복사해 사례집에 붙여 넣으세요.', 'good');
     $('moreRow').hidden = false;
@@ -391,7 +431,7 @@ async function run(fresh){
     const code = e && (e.code || e.name);
     if (code === 'AbortError') setStatus('');
     else if (code === 'rate_limited') setStatus('요청이 몰렸어요. 1분쯤 뒤 다시 눌러 주세요.', 'err');
-    else if (code === 'too_large') setStatus('지문이 너무 길어요. 활동에 쓴 지문만 남기고 앞뒤의 다른 내용은 지워 주세요.', 'err');
+    else if (code === 'too_large') setStatus(mode === 'img' ? '캡처가 너무 커요. 장수를 줄이거나 필요한 쪽만 넣어 주세요.' : '지문이 너무 길어요. 활동에 쓴 지문만 남기고 앞뒤의 다른 내용은 지워 주세요.', 'err');
     else if (code === 'no_key') openFallback('Vercel에 GEMINI_API_KEY가 없어요. Settings → Environment Variables에 넣고 Redeploy 해 주세요.');
     else if (code === 'bad_key') openFallback('API 키가 맞지 않아요. 키를 다시 복사해 넣고 Redeploy 해 주세요. (' + (e.detail || '') + ')');
     else openFallback('결과를 받지 못했어요. [' + (code || '알 수 없음') + '] ' + (e && e.detail ? e.detail : '') );
@@ -402,12 +442,13 @@ $('go').onclick = () => run(false);
 $('again').onclick = () => run(true);
 $('reset').onclick = () => {
   ['passage','items'].forEach(id => { $(id).value = ''; try { localStorage.removeItem('di_'+id); } catch {} $(id).dispatchEvent(new Event('input')); });
-  setStatus('입력을 지웠어요. 새 활동의 지문부터 넣어 주세요.'); $('passage').focus();
+  imgs.splice(0).forEach(i => URL.revokeObjectURL(i.url)); renderThumbs();
+  setStatus('입력을 지웠어요. 새 활동의 문항 구성부터 넣어 주세요.'); if (mode === 'text') $('passage').focus();
 };
 $('copyPrompt').onclick = async () => {
-  if (!$('passage').value.trim() || !$('items').value.trim()) { $('fbStatus').textContent = 'STEP 1, 2를 먼저 채워 주세요.'; return; }
+  if (!hasPassage() || !$('items').value.trim()) { $('fbStatus').textContent = 'STEP 1, 2를 먼저 채워 주세요.'; return; }
   const p = buildTextPrompt();
-  try { await navigator.clipboard.writeText(p); $('fbStatus').textContent = '복사됨. ChatGPT·Gemini 등에 붙여 넣으면 후보 3개가 나옵니다.'; burst($('copyPrompt')); }
+  try { await navigator.clipboard.writeText(p); $('fbStatus').textContent = mode === 'img' ? '복사됨. 다른 AI에 붙여 넣을 때 캡처 이미지도 함께 첨부해 주세요.' : '복사됨. ChatGPT·Gemini 등에 붙여 넣으면 후보 3개가 나옵니다.'; burst($('copyPrompt')); }
   catch { const t = $('promptOut'); t.value = p; t.hidden = false; t.focus(); t.select();
     $('fbStatus').textContent = '자동 복사가 막혀 있어요. 아래 칸이 선택돼 있으니 직접 복사해 주세요.'; }
 };
@@ -417,7 +458,7 @@ let restored = false;
 [['passage','c1'],['items','c2']].forEach(([id, card]) => {
   try { const v = localStorage.getItem('di_'+id); if (v) { $(id).value = v; restored = true; } } catch {}
   const mark = () => {
-    $(card).classList.toggle('filled', !!$(id).value.trim());
+    $(card).classList.toggle('filled', id === 'passage' ? hasPassage() : !!$(id).value.trim());
     if (id === 'passage') { const n = $(id).value.length; $('pCount').textContent = `${n.toLocaleString()} / 30,000자`; $('pCount').classList.toggle('over', n >= 30000); }
   };
   mark();
@@ -427,6 +468,86 @@ let restored = false;
     try { localStorage.setItem('di_'+id, $(id).value); } catch {}
   });
 });
+
+// ---- 지문 탭 + 캡처 이미지
+function setMode(m){
+  mode = m;
+  $('tabText').classList.toggle('on', m === 'text'); $('tabText').setAttribute('aria-selected', m === 'text');
+  $('tabImg').classList.toggle('on', m === 'img'); $('tabImg').setAttribute('aria-selected', m === 'img');
+  $('paneText').hidden = m !== 'text'; $('paneImg').hidden = m !== 'img';
+  $('c1').classList.toggle('filled', hasPassage());
+  if ($('status').classList.contains('err')) setStatus('');
+}
+$('tabText').onclick = () => setMode('text');
+$('tabImg').onclick = () => setMode('img');
+
+function shrink(file){
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const im = new Image();
+    im.onload = () => {
+      const MAX = 1600, sc = Math.min(1, MAX / Math.max(im.naturalWidth, im.naturalHeight));
+      const c = document.createElement('canvas');
+      c.width = Math.round(im.naturalWidth * sc); c.height = Math.round(im.naturalHeight * sc);
+      const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(im, 0, 0, c.width, c.height);
+      const dataUrl = c.toDataURL('image/jpeg', 0.82);
+      URL.revokeObjectURL(url);
+      c.toBlob(b => resolve({ mime: 'image/jpeg', data: dataUrl.split(',')[1], url: URL.createObjectURL(b) }), 'image/jpeg', 0.82);
+    };
+    im.onerror = () => { URL.revokeObjectURL(url); reject(new Error('read')); };
+    im.src = url;
+  });
+}
+
+async function addFiles(list){
+  const files = [...list].filter(f => f.type.startsWith('image/'));
+  if (!files.length) return;
+  const room = MAX_IMGS - imgs.length;
+  if (room <= 0) { setStatus('캡처는 최대 8장까지 넣을 수 있어요.', 'err'); return; }
+  if (files.length > room) setStatus(`최대 8장이라 앞의 ${room}장만 넣었어요.`, 'err');
+  for (const f of files.slice(0, room)) {
+    const slot = { pending: true }; imgs.push(slot); renderThumbs();
+    try { Object.assign(slot, await shrink(f)); slot.pending = false; }
+    catch { imgs.splice(imgs.indexOf(slot), 1); setStatus('읽을 수 없는 이미지가 있어 뺐어요.', 'err'); }
+    renderThumbs();
+  }
+}
+
+function renderThumbs(){
+  const box = $('thumbs'); box.innerHTML = '';
+  imgs.forEach((it, i) => {
+    const d = document.createElement('div'); d.className = 'thumb' + (it.pending ? ' busy' : '');
+    if (it.pending) { d.textContent = '준비 중…'; box.append(d); return; }
+    const im = document.createElement('img'); im.src = it.url; im.alt = `캡처 ${i+1}`;
+    const no = document.createElement('span'); no.className = 'no'; no.textContent = i + 1;
+    const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'rm'; rm.textContent = '✕'; rm.setAttribute('aria-label', `캡처 ${i+1} 빼기`);
+    rm.onclick = () => { URL.revokeObjectURL(it.url); imgs.splice(i, 1); renderThumbs(); };
+    const mv = document.createElement('div'); mv.className = 'mv';
+    const l = document.createElement('button'); l.type = 'button'; l.textContent = '◀'; l.setAttribute('aria-label', '앞으로'); l.disabled = i === 0;
+    l.onclick = () => { [imgs[i-1], imgs[i]] = [imgs[i], imgs[i-1]]; renderThumbs(); };
+    const r = document.createElement('button'); r.type = 'button'; r.textContent = '▶'; r.setAttribute('aria-label', '뒤로'); r.disabled = i === imgs.length - 1;
+    r.onclick = () => { [imgs[i+1], imgs[i]] = [imgs[i], imgs[i+1]]; renderThumbs(); };
+    mv.append(l, r);
+    d.append(im, no, rm, mv); box.append(d);
+  });
+  $('iCount').textContent = `${imgs.length} / 8장`;
+  $('drop').classList.toggle('full', imgs.length >= MAX_IMGS);
+  $('c1').classList.toggle('filled', hasPassage());
+}
+
+$('imgInput').addEventListener('change', e => { addFiles(e.target.files); e.target.value = ''; });
+const drop = $('drop');
+['dragenter','dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave','drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => addFiles(e.dataTransfer.files));
+document.addEventListener('paste', e => {
+  const files = [...(e.clipboardData?.files || [])].filter(f => f.type.startsWith('image/'));
+  if (!files.length) return;
+  e.preventDefault();
+  if (mode !== 'img') setMode('img');
+  addFiles(files);
+});
+
 if (restored) setStatus('지난번 입력을 불러왔어요. 새 활동이면 ‘새 활동 시작’을 눌러 주세요.');
 
 </script>
